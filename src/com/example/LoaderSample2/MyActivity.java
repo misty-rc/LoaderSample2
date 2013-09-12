@@ -113,15 +113,16 @@ public class MyActivity extends Activity {
         public Loader<String> onCreateLoader(int id, Bundle args) {
             ProgressDialogFragment dialog = new ProgressDialogFragment();
             Bundle arg = new Bundle();
-            arg.putString("message", "データほげほげ");
+            arg.putString(Ref.PROGRESS_MESSAGE, "データほげほげ");
             dialog.setArguments(arg);
-            dialog.show(getFragmentManager(), "progress");
+            dialog.show(getFragmentManager(), Ref.PROGRESS_TAG);
             return new MyLoader(MyActivity.this);
         }
 
         @Override
         public void onLoadFinished(Loader<String> loader, String data) {
-            ProgressDialogFragment dialog = (ProgressDialogFragment)getFragmentManager().findFragmentByTag("progress");
+            ProgressDialogFragment dialog =
+                    (ProgressDialogFragment)getFragmentManager().findFragmentByTag(Ref.PROGRESS_TAG);
             if(dialog != null) {
                 dialog.onDismiss(dialog.getDialog());
             }
@@ -213,7 +214,7 @@ public class MyActivity extends Activity {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             ProgressDialog dialog = new ProgressDialog(getActivity());
-            dialog.setMessage(getArguments().getString("message"));
+            dialog.setMessage(getArguments().getString(Ref.PROGRESS_MESSAGE));
             return dialog;
         }
     }
